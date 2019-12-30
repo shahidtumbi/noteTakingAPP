@@ -1,4 +1,4 @@
-const express=require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 
 const dbConfig = require('./config/database.config.js');
@@ -14,22 +14,22 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
 }).then(() => {
-    console.log("Successfully connected to the database");    
+    console.log("Successfully connected to the database");
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
 });
 
 app.use(bodyParser.json())
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
     next();
-  });
+});
 
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to Notet taking application."});
+    res.json({ "message": "Welcome to Notet taking application." });
 });
 
 require('./app/routes/note.route.js')(app);
